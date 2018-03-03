@@ -56,12 +56,42 @@ defmodule Introduction do
     def len([h|t]) do
         1 + len(t)
     end
-    # len with acc
-    def len_acc([]) do 0 end
+    # len with accumulator
     def len_acc(list) do
-        len
+        len_acc(list, 0)
     end
+    def len_acc([], acc) do acc end
     def len_acc([h|t], acc) do
-        
+        len_acc(t, acc + 1)
+    end
+
+    # Sum
+    def sum([]) do 0 end
+    def sum([h|t]) do
+        h + sum(t)
+    end
+
+    # Sum with accumulator
+    def sum_acc(list) do
+        sum_acc(list, 0)
+    end
+    def sum_acc([], acc) do acc end
+    def sum_acc([h|t], acc) do
+        sum_acc(t, acc+h)
+    end
+
+    # Duplicate
+    def duplicate([]) do [] end
+    def duplicate([h|t]) do
+        [h, h | duplicate(t)]
+    end
+
+    # Add function, very clever IMO
+    # This will only happen if x is not in the list, because it came to the end and x != h
+    def add(x, []) do [x] end
+     # If x and one element (the head) was equal, just return a list with x once (not added), and add reccursion will not keep going
+    def add(x, [x|t]) do [x | t] end
+    def add(x, [h|t]) do
+        [h | add(x, t)]
     end
 end
