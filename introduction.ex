@@ -147,4 +147,26 @@ defmodule Intro do
     def reverse_good([h|t], r) do
         reverse_good(t, [h]++r)
     end
+
+    # insert function that inserts a element into the right place in a list
+    def insert(ele, []) do [ele] end
+    def insert(ele, [h|t]) do
+        if ele < h do
+            [ele] ++ [h|t]
+        else
+            [h|insert(ele, t)]
+        end
+    end
+
+    # Insertion Sort function that uses the insert function above
+    def insertion_sort(list) do insertion_sort([], list) end
+
+    def insertion_sort(list, []) do list end
+    def insertion_sort([],[]) do [] end
+    def insertion_sort([], [h|t]) do
+        insertion_sort(insert(h, []), t)
+    end
+    def insertion_sort(list, [h|t]) do
+        insertion_sort(insert(h, list), t)
+    end
 end
