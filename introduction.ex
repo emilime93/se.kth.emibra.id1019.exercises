@@ -169,4 +169,35 @@ defmodule Intro do
     def insertion_sort(list, [h|t]) do
         insertion_sort(insert(h, list), t)
     end
+
+    # Merge sort
+    def merge_sort([]) do [] end
+    def merge_sort([h|[]]) do [h] end
+    def merge_sort(list) do
+        {l1, l2} = msplit(list)
+        merge(merge_sort(l1), merge_sort(l2))
+    end
+
+    # Split/1 helper function
+    def msplit([]) do [] end
+    def msplit(list) do
+        msplit(list, [], [])
+    end
+    # split/2
+    def msplit([h|t], l1, l2) do
+        msplit(t, [h] ++ l2, l1)
+    end
+    def msplit([], l1, l2) do
+        {l1, l2}
+    end
+
+    def merge([], l2) do l2 end
+    def merge(l1, []) do l1 end
+    def merge([h1|t1], [h2|t2]) do
+        if h1 < h2 do
+            [h1] ++ merge(t1, [h2|t2])
+        else
+            [h2] ++ merge([h1|t1], t2)
+        end
+    end
 end
