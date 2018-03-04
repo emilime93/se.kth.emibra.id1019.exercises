@@ -1,4 +1,4 @@
-defmodule Introduction do
+defmodule Intro do
     
     # Product with addition
     def product(0, _) do 0 end
@@ -46,14 +46,14 @@ defmodule Introduction do
     # ================ LISTS ================ #
     # nth element
     def nth(_, []) do nil end
-    def nth(1, [h|t]) do h end
-    def nth(n, [h|t]) do
+    def nth(1, [h|_]) do h end
+    def nth(n, [_|t]) do
         nth(n-1, t)
     end
 
     # len
     def len([]) do 0 end
-    def len([h|t]) do
+    def len([_|t]) do
         1 + len(t)
     end
     # len with accumulator
@@ -61,7 +61,7 @@ defmodule Introduction do
         len_acc(list, 0)
     end
     def len_acc([], acc) do acc end
-    def len_acc([h|t], acc) do
+    def len_acc([_|t], acc) do
         len_acc(t, acc + 1)
     end
 
@@ -91,7 +91,60 @@ defmodule Introduction do
     def add(x, []) do [x] end
      # If x and one element (the head) was equal, just return a list with x once (not added), and add reccursion will not keep going
     def add(x, [x|t]) do [x | t] end
+    # And in the oter case, if x and h are not equal, the reccursion will build a list with h and add (x, t)
     def add(x, [h|t]) do
         [h | add(x, t)]
+    end
+
+    # Remove all occurrences if x from list
+    def remove(_, []) do [] end
+    def remove(x, [x|t]) do
+        remove(x, t)
+    end
+    def remove(x, [h|t]) do
+        [h | remove(x, t)]
+    end
+    
+    # Unique
+    def unique([]) do [] end
+    def unique([h|t]) do
+        [h | unique(remove(h, t))]
+    end
+
+    # Pack
+    # Test data: [:a,:a,:b,:c,:b,:a,:c]
+    def pack([]) do [] end
+    def pack([h|t]) do
+        [create_n_list(h, num_occ(h, t)+1) | pack(remove(h, t))]
+    end
+
+    # Helper to "Pack"
+    # creates a list with n number of x
+    def create_n_list(x, 1) do [x] end
+    def create_n_list(x, n) do
+        [x | create_n_list(x, n-1)]
+    end
+
+    # Helper to "Pack"
+    # Returns the number of occurrences of x in list
+    def num_occ(_, []) do 0 end
+    def num_occ(x, [x|t]) do
+        1 + num_occ(x, t)
+    end
+    def num_occ(x, [_|t]) do
+        num_occ(x, t)
+    end
+
+    # Reverse, this is naive and is 0(n^2)
+    def reverse([]) do [] end
+    def reverse([h|t]) do
+        reverse(t) ++ [h]
+    end
+
+    # Better revese, which is O(n)
+    def reverse_good(list) do reverse_good(list, []) end
+    def reverse_good([], r) do r end
+    def reverse_good([h|t], r) do
+        reverse_good(t, [h]++r)
     end
 end
