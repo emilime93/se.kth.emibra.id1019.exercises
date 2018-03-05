@@ -201,10 +201,33 @@ defmodule Intro do
         end
     end
 
+
+    # Quicksort
+    def qsort([]) do [] end
+    def qsort([e]) do [e] end
     def qsort([p|l]) do
-        {l1, l2} = partition(p, l, [], [])
+        {l1, l2} = partition(p, l)
         small = qsort(l1)
         large = qsort(l2)
         append(small ,[p|large])
+    end
+
+    # Partition
+    def partition(p, list) do
+        partition(p, list, [], [])
+    end
+    def partition(_, [], l1, l2) do {l1, l2} end
+    def partition(p, [h|t], l1, l2) do
+        if h < p do
+            partition(p, t, [h] ++ l1, l2)
+        else
+            partition(p, t, l1, [h] ++ l2)
+        end
+    end
+
+    # Append
+    def append([], l2) do l2 end
+    def append([h|t], l2) do
+        [h | append(t, l2)]
     end
 end
