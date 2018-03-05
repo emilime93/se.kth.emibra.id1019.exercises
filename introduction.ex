@@ -172,7 +172,7 @@ defmodule Intro do
 
     # Merge sort
     def merge_sort([]) do [] end
-    def merge_sort([h|[]]) do [h] end
+    def merge_sort([h]) do [h] end
     def merge_sort(list) do
         {l1, l2} = msplit(list)
         merge(merge_sort(l1), merge_sort(l2))
@@ -199,5 +199,12 @@ defmodule Intro do
         else
             [h2] ++ merge([h1|t1], t2)
         end
+    end
+
+    def qsort([p|l]) do
+        {l1, l2} = partition(p, l, [], [])
+        small = qsort(l1)
+        large = qsort(l2)
+        append(small ,[p|large])
     end
 end
