@@ -31,6 +31,4 @@ defmodule Deriv do
     def deriv({:add, e1, e2}, v) do
         {:add, deriv(e1, v), deriv(e2, v)}
     end
-
-
 end
